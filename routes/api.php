@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ApiUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::get('/', function(){
+    return 'manual do aluno';
 });
+
+Route::controller(ApiUserController::class)->group(function(){
+    
+    Route::post('/creat','index')->name('creat.index');
+    Route::post('/profile-update','updateProfile')->name('updateProfile');
+
+});
+
+// Route::post('/auth/1', [ApiUserController::class, 'index'])->name('index');
