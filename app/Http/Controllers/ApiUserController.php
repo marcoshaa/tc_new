@@ -15,15 +15,14 @@ use App\Models\User;
 
 class ApiUserController extends Controller
 {
-    use RegistersUsers;
-    
+    use RegistersUsers;    
 
     public function index(Request $request){
         $rules = [
             'name'     =>['required','string','max:240'],
             'email'    =>['required','string','email','max:255','unique:users'],
             'password' =>['required','string','min:6','max:6'],
-            'level' =>['required','string','max:2'],
+            'level'    =>['required','string','max:2'],
         ];
 
         $validacao = Validator::make($request->all(),$rules);
