@@ -15,7 +15,5 @@ use App\Models\User;
 
 class CoursesController extends Controller
 {
-    use RegistersUsers;    
-
     
 }

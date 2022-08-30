@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Courses extends Model
+class CoursesImg extends Model
 {
-    protected $table = "courses";
+    protected $table = "courses_img";
     protected $fillable = [
-        'name',
-        'teacher_code',
+        'id_courses',
+        'route',
     ];
 }
