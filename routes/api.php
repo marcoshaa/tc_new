@@ -31,7 +31,16 @@ Route::controller(UploadController::class)->group(function(){
     
     Route::post('/upload','store')->name('apload.file');
     Route::post('/view_img','show')->name('show.img');
+    Route::post('/allCourses','allCourses')->name('courses.index');
     // Route::post('/','')->name('');
+    // Route::post('/','')->name('');
+
+});
+
+Route::controller(QuizController::class)->group(function(){
+    
+    Route::post('/standard-help','standard')->name('help.index');
+    Route::post('/standard-help','standard')->name('help.index');
     // Route::post('/','')->name('');
     // Route::post('/','')->name('');
 
