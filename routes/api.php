@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiUserController;
 use App\Http\Controllers\UploadController;
+use App\Http\Controllers\CoursesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,29 +22,39 @@ Route::get('/', function(){
 });
 
 Route::controller(ApiUserController::class)->group(function(){
-    
-    Route::post('/creat','index')->name('creat.index');
-    Route::post('/profile-update','updateProfile')->name('updateProfile');
 
+    Route::post('/creat','index')->name('creat.index');//cria user
+    Route::post('/profile-update','updateProfile')->name('updateProfile');//atualiza  perfil
+    Route::post('/allTeacher','allTeacher')->name('allTeacher.index');//busca todos professores
+    Route::post('/selectTeacher','selectTeacher')->name('selectTeacher.index');//busca professor pelo id
 });
 
 Route::controller(UploadController::class)->group(function(){
     
-    Route::post('/upload','store')->name('apload.file');
-    Route::post('/view_img','show')->name('show.img');
-    Route::post('/allCourses','allCourses')->name('courses.index');
+    Route::post('/upload','store')->name('apload.file');//sobe os aquivos dos  cursos
     // Route::post('/','')->name('');
     // Route::post('/','')->name('');
-
 });
 
 Route::controller(QuizController::class)->group(function(){
     
-    Route::post('/standard-help','standard')->name('help.index');
-    Route::post('/standard-help','standard')->name('help.index');
-    // Route::post('/','')->name('');
-    // Route::post('/','')->name('');
+    Route::post('/standard-help','standard')->name('help.index');//duvidas padroes
+    Route::post('/standard-help/creat','creatStandard')->name('helpCreat.index');//criar duvidas padroes
+    Route::post('/request-help','creatRequestHelp')->name('helpRequest.index');//pedido de ajuda
+    //Route::post('/','')->name('');
+});
 
+Route::controller(CoursesController::class)->group(function(){
+        
+    Route::post('/view_img','show')->name('show.img');//captura a imagen do curso 
+    Route::post('/allCourses','allCourses')->name('courses.index');//mostra todos os cursos
+});
+
+Route::controller(EmblemController::class)->group(function(){
+        
+    Route::post('/view_emblem','show')->name('show.emblem');//captura todos os emblemas
+    Route::post('/selectEmblem','selectEmblem')->name('selectEmblem.index');//escolhe um emblema
+    
 });
 
 // Route::post('/auth/1', [ApiUserController::class, 'index'])->name('index');

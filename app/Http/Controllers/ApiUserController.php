@@ -32,9 +32,13 @@ class ApiUserController extends Controller
         }else{
             $user = User::create([
                 'name'      => $request->name,
+                'username'  => $request->username,
                 'email'     => $request->email,
+                'city'      => $request->city,
+                'email'     => $request->email,
+                'bio'       => $request->bio,
                 'password'  => Hash::make($request->password),
-                'level'     => $request->level,
+                'occupation'=> $request->level,
                 'birth'     => $request->birth
             ]);
             if(!empty($user)){
@@ -62,5 +66,15 @@ class ApiUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
         return response()->json('Perfil Atualizado');
+    }
+
+    public function allTeacher(){
+        $professor = User::where('occupation','=','teacher')->get();
+        return response()->json($professor);
+    }
+
+    public function selectTeacher(Request $request){
+        $professor = User::where('id','=',$request)->get();
+        return response()->json($professor);
     }
 }

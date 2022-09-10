@@ -43,20 +43,4 @@ class UploadController extends Controller
             return json_encode('ok');
         }
     }
-
-    public function show(Request $request){
-        
-        $id = $request->id_courses;
-        $table_filter = DB::table('courses_img');
-        $table_filter->where('id_courses','=',$id);
-        $j = $table_filter->get();
-        
-        return json_encode($j);
-    }
-
-    //retorna todos os cursos 
-    public function allCourses(){
-        $cursos = Courses::all();
-        return json_encode($cursos);
-    }
 }

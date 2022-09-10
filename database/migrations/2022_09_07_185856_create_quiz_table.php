@@ -15,6 +15,10 @@ class CreateQuizTable extends Migration
     {
         Schema::create('quiz', function (Blueprint $table) {
             $table->id();
+            $table->string('categoryQuestion');
+            $table->text('description');
+            $table->json('alternatives');
+            $table->text('rightAlternative');
             $table->timestamps();
         });
     }

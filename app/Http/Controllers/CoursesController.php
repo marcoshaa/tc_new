@@ -11,9 +11,26 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use App\Models\User;
+use App\Models\Courses;
+use App\Models\CoursesImg;
+Use DB;
 
 
 class CoursesController extends Controller
 {
-    
+    public function show(Request $request){
+        
+        $id = $request->id_courses;
+        $table_filter = DB::table('courses_img');
+        $table_filter->where('id_courses','=',$id);
+        $j = $table_filter->get();
+        
+        return json_encode($j);
+    }
+
+    //retorna todos os cursos 
+    public function allCourses(){
+        $cursos = Courses::all();
+        return json_encode($cursos);
+    }
 }
