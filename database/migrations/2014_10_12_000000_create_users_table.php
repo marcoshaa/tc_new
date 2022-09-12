@@ -20,8 +20,8 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('city');
-            $table->string('statistic');
-            $table->string('imageAvatar');
+            $table->string('statistic')->nullable();
+            $table->string('imageAvatar')->nullable();
             $table->set('occupation',['student','teacher'])->default('student');
             $table->text('bio');
             $table->date('birth');            

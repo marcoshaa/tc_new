@@ -2,9 +2,10 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ApiUserController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\CoursesController;
+use App\Services\ResponseService;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,12 +22,17 @@ Route::get('/', function(){
     return 'manual do aluno';
 });
 
-Route::controller(ApiUserController::class)->group(function(){
+Route::group(['prefix' => 'v1', 'middleware' => 'jwt.verify'],function () {
+    Route::post('logout', 'UserController@logout')->name('users.logout');
+});
+
+Route::controller(UserController::class)->group(function(){
 
     Route::post('/creat','index')->name('creat.index');//cria user
     Route::post('/profile-update','updateProfile')->name('updateProfile');//atualiza  perfil
     Route::post('/allTeacher','allTeacher')->name('allTeacher.index');//busca todos professores
     Route::post('/selectTeacher','selectTeacher')->name('selectTeacher.index');//busca professor pelo id
+    Route::post('/login','login')->name('userLogin');//login JWT
 });
 
 Route::controller(UploadController::class)->group(function(){
@@ -57,4 +63,4 @@ Route::controller(EmblemController::class)->group(function(){
     
 });
 
-// Route::post('/auth/1', [ApiUserController::class, 'index'])->name('index');
+// Route::post('/auth/1', [UserController::class, 'index'])->name('index');

@@ -1,28 +1,30 @@
 <?php
-
+//https://matheussg.medium.com/api-laravel-react-js-parte-2-estrutura-e-cadastro-de-usu%C3%A1rio-3269ee0be2ea
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-
+use App\User;
+use App\Transformers\User\UserResource;
+use App\Transformers\User\UserResourceCollection;
 use Illuminate\Http\Request;
+use App\Http\Requests\User\StoreUser;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
-use App\Models\User;
+use App\Services\ResponseService;
 
-
-class ApiUserController extends Controller
+class UserController extends Controller
 {
     use RegistersUsers;    
 
     public function index(Request $request){
         $rules = [
-            'name'     =>['required','string','max:240'],
-            'email'    =>['required','string','email','max:255','unique:users'],
-            'password' =>['required','string','min:6','max:6'],
-            'level'    =>['required','string','max:2'],
+            'name'      =>['required','string','max:240'],
+            'email'     =>['required','string','email','max:255','unique:users'],
+            'password'  =>['required','string','min:6','max:6'],
+            // 'occupation'=>['required','string'],
         ];
 
         $validacao = Validator::make($request->all(),$rules);
@@ -38,7 +40,7 @@ class ApiUserController extends Controller
                 'email'     => $request->email,
                 'bio'       => $request->bio,
                 'password'  => Hash::make($request->password),
-                'occupation'=> $request->level,
+                'occupation'=> $request->occupation,
                 'birth'     => $request->birth
             ]);
             if(!empty($user)){
@@ -76,5 +78,31 @@ class ApiUserController extends Controller
     public function selectTeacher(Request $request){
         $professor = User::where('id','=',$request)->get();
         return response()->json($professor);
+    }
+    
+    public function login(Request $request){
+        $credentials = $request->only('email', 'password');
+
+        try {
+            $token = $this
+            ->user
+            ->login($credentials);
+        } catch (\Throwable|\Exception $e) {
+            return ResponseService::exception('users.login',null,$e);
+        }
+
+        return response()->json(compact('token'));
+    }
+
+    public function logout(Request $request) {
+        try {
+            $this
+            ->user
+            ->logout($request->input('token'));
+        } catch (\Throwable|\Exception $e) {
+            return ResponseService::exception('users.logout',null,$e);
+        }
+
+        return response(['status' => true,'msg' => 'Deslogado com sucesso'], 200);
     }
 }
