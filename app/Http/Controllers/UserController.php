@@ -1,9 +1,9 @@
 <?php
-//https://matheussg.medium.com/api-laravel-react-js-parte-2-estrutura-e-cadastro-de-usu%C3%A1rio-3269ee0be2ea
+
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\User;
+use App\Models\User;
 use App\Transformers\User\UserResource;
 use App\Transformers\User\UserResourceCollection;
 use Illuminate\Http\Request;
@@ -17,7 +17,13 @@ use App\Services\ResponseService;
 
 class UserController extends Controller
 {
-    use RegistersUsers;    
+    use RegistersUsers; 
+
+    private $user;
+
+    public function __construct(User $user){
+        $this->user = $user;
+    }
 
     public function index(Request $request){
         $rules = [
@@ -82,7 +88,6 @@ class UserController extends Controller
     
     public function login(Request $request){
         $credentials = $request->only('email', 'password');
-
         try {
             $token = $this
             ->user
@@ -90,7 +95,6 @@ class UserController extends Controller
         } catch (\Throwable|\Exception $e) {
             return ResponseService::exception('users.login',null,$e);
         }
-
         return response()->json(compact('token'));
     }
 

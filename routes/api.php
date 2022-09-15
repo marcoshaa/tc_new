@@ -28,11 +28,11 @@ Route::group(['prefix' => 'v1', 'middleware' => 'jwt.verify'],function () {
 
 Route::controller(UserController::class)->group(function(){
 
-    Route::post('/creat','index')->name('creat.index');//cria user
+    Route::post('/creat','index')->name('users.store');//cria user
     Route::post('/profile-update','updateProfile')->name('updateProfile');//atualiza  perfil
     Route::post('/allTeacher','allTeacher')->name('allTeacher.index');//busca todos professores
     Route::post('/selectTeacher','selectTeacher')->name('selectTeacher.index');//busca professor pelo id
-    Route::post('/login','login')->name('userLogin');//login JWT
+    Route::post('/login','login')->name('users.login');//login JWT
 });
 
 Route::controller(UploadController::class)->group(function(){
