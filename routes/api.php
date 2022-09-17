@@ -21,6 +21,7 @@ use App\Services\ResponseService;
 Route::get('/', function(){
     return 'manual do aluno';
 });
+//Route::post('login', 'UserController@login')->name('users.login');
 
 Route::group(['prefix' => 'v1', 'middleware' => 'jwt.verify'],function () {
     Route::post('logout', 'UserController@logout')->name('users.logout');

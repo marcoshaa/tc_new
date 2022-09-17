@@ -85,7 +85,12 @@ class UserController extends Controller
         $professor = User::where('id','=',$request)->get();
         return response()->json($professor);
     }
-    
+    /**
+     * Login the user
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function login(Request $request){
         $credentials = $request->only('email', 'password');
         try {
