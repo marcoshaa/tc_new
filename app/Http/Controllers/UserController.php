@@ -17,7 +17,6 @@ use App\Services\ResponseService;
 
 class UserController extends Controller
 {
-    use RegistersUsers; 
 
     private $user;
 
@@ -102,7 +101,13 @@ class UserController extends Controller
         }
         return response()->json(compact('token'));
     }
-
+    
+    /**
+     * Logout user
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function logout(Request $request) {
         try {
             $this

@@ -41,7 +41,7 @@ class QuizController extends Controller
         ],200);      
     }
 
-    public function  quiz(){
+    public function  responseForm(){
         
     }
 }
