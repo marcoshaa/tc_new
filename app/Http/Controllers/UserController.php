@@ -14,15 +14,10 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use App\Services\ResponseService;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-
-    private $user;
-
-    public function __construct(User $user){
-        $this->user = $user;
-    }
 
     public function index(Request $request){
         $rules = [
@@ -84,39 +79,5 @@ class UserController extends Controller
         $professor = User::where('id','=',$request)->get();
         return response()->json($professor);
     }
-    /**
-     * Login the user
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function login(Request $request){
-        $credentials = $request->only('email', 'password');
-        try {
-            $token = $this
-            ->user
-            ->login($credentials);
-        } catch (\Throwable|\Exception $e) {
-            return ResponseService::exception('users.login',null,$e);
-        }
-        return response()->json(compact('token'));
-    }
     
-    /**
-     * Logout user
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function logout(Request $request) {
-        try {
-            $this
-            ->user
-            ->logout($request->input('token'));
-        } catch (\Throwable|\Exception $e) {
-            return ResponseService::exception('users.logout',null,$e);
-        }
-
-        return response(['status' => true,'msg' => 'Deslogado com sucesso'], 200);
-    }
 }

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\CoursesController;
+use App\Http\Controllers\AuthController;
 use App\Services\ResponseService;
 
 /*
@@ -23,17 +24,24 @@ Route::get('/', function(){
 });
 //Route::post('login', 'UserController@login')->name('users.login');
 
-Route::group(['prefix' => 'v1', 'middleware' => 'jwt.verify'],function () {
-    Route::post('logout', 'UserController@logout')->name('users.logout');
+// Route::group(['prefix' => 'v1', 'middleware' => 'jwt.verify'],function () {
+//     Route::post('logout', 'UserController@logout')->name('users.logout');
+// });
+Route::controller(AuthController::class)->group(function(){
+
+    Route::post('/login', 'login')->name('login.api');
+    Route::middleware('jwt.verify')->post('logout', 'logout')->name('deslogar');
+    Route::middleware('jwt.verify')->post('refresh', 'refresh')->name('att');
+    Route::middleware('jwt.verify')->post('me', 'me')->name('i');
 });
 
 Route::controller(UserController::class)->group(function(){
 
     Route::post('/creat','index')->name('users.store');//cria user
-    Route::post('/profile-update','updateProfile')->name('updateProfile');//atualiza  perfil
+    Route::middleware('jwt.verify')->post('/profile-update','updateProfile')->name('updateProfile');//atualiza  perfil
     Route::post('/allTeacher','allTeacher')->name('allTeacher.index');//busca todos professores
     Route::post('/selectTeacher','selectTeacher')->name('selectTeacher.index');//busca professor pelo id
-    Route::post('/login','login')->name('users.login');//login JWT
+    // Route::post('/login','login')->name('users.login');//login JWT
 });
 
 Route::controller(UploadController::class)->group(function(){
@@ -47,7 +55,7 @@ Route::controller(QuizController::class)->group(function(){
     
     Route::post('/standard-help','standard')->name('help.index');//duvidas padroes
     Route::post('/standard-help/creat','creatStandard')->name('helpCreat.index');//criar duvidas padroes
-    Route::post('/request-help','creatRequestHelp')->name('helpRequest.index');//pedido de ajuda
+    Route::middleware('jwt.verify')->post('/request-help','creatRequestHelp')->name('helpRequest.index');//pedido de ajuda
     //Route::post('/','')->name('');
 });
 
