@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\CoursesController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\QuizController;
 use App\Services\ResponseService;
 
 /*
@@ -56,7 +57,8 @@ Route::controller(QuizController::class)->group(function(){
     Route::post('/standard-help','standard')->name('help.index');//duvidas padroes
     Route::post('/standard-help/creat','creatStandard')->name('helpCreat.index');//criar duvidas padroes
     Route::middleware('jwt.verify')->post('/request-help','creatRequestHelp')->name('helpRequest.index');//pedido de ajuda
-    //Route::post('/','')->name('');
+    Route::post('/resposta','responseForm')->name('responseForm');
+    Route::middleware('jwt.verify')->post('/creat_quiz','creatQuiz')->name('creat_quiz');//cria as questoes dos cursos
 });
 
 Route::controller(CoursesController::class)->group(function(){

@@ -15,10 +15,13 @@ class CreateQuizTable extends Migration
     {
         Schema::create('quiz', function (Blueprint $table) {
             $table->id();
-            $table->string('categoryQuestion');
-            $table->text('description');
-            $table->json('alternatives');
-            $table->text('rightAlternative');
+            $table->id('id_matter');
+            $table->text('title');            
+            $table->text('alternative_1');
+            $table->text('alternative_2');
+            $table->text('alternative_3');
+            $table->text('alternative_4');
+            $table->text('answer');
             $table->timestamps();
         });
     }

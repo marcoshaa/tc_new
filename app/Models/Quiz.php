@@ -9,10 +9,11 @@ class Quiz extends Model
 {
     protected $table = "quiz";
     protected $fillable = [
-        'categoryQuestion',
-        'description',
-    ];
-    protected $casts = [
-        'alternatives' => 'array'
+        'title',
+        'alternative_1',
+        'alternative_2',
+        'alternative_3',
+        'alternative_4',
+        'answer',
     ];
 }
