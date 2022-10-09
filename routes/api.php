@@ -21,7 +21,7 @@ use App\Services\ResponseService;
 */
 
 Route::get('/', function(){
-    return 'manual do aluno';
+    return 'manual dos alunos ';
 });
 //Route::post('login', 'UserController@login')->name('users.login');
 
@@ -33,7 +33,6 @@ Route::controller(AuthController::class)->group(function(){
     Route::post('/login', 'login')->name('login.api');
     Route::middleware('jwt.verify')->post('logout', 'logout')->name('deslogar');
     Route::middleware('jwt.verify')->post('refresh', 'refresh')->name('att');
-    Route::middleware('jwt.verify')->post('me', 'me')->name('i');
 });
 
 Route::controller(UserController::class)->group(function(){
