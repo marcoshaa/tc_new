@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRespostaTable extends Migration
+class CreateHistoryTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateRespostaTable extends Migration
      */
     public function up()
     {
-        Schema::create('resposta', function (Blueprint $table) {
+        Schema::create('history', function (Blueprint $table) {
             $table->id();
             $table->integer('id_user');
             $table->integer('id_questao');
+            $table->integer('points');
             $table->set('nota',['0','1'])->default('0'); 
             $table->timestamps();
         });
@@ -29,6 +30,6 @@ class CreateRespostaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('resposta');
+        Schema::dropIfExists('history');
     }
 }
