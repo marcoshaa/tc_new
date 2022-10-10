@@ -33,4 +33,10 @@ class CoursesController extends Controller
         $cursos = Courses::all();
         return json_encode($cursos);
     }
+
+    //retorna todos os cursos 
+    public function selectCourses(){
+        $cursos = Courses::all();
+        return json_encode($cursos);
+    }
 }
