@@ -14,7 +14,7 @@ class CreateCoursesImgTable extends Migration
     public function up()
     {
         Schema::create('courses_img', function (Blueprint $table) {
-            $table->string('id_courses');
+            $table->integer('id_courses');
             $table->string('route');
             $table->timestamps();
         });
