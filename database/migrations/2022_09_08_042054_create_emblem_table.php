@@ -16,6 +16,7 @@ class CreateEmblemTable extends Migration
         Schema::create('emblem', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->integer('goal');
             $table->text('description');
             $table->string('img_route');
             $table->timestamps();
