@@ -13,12 +13,22 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens;
-    use HasFactory;
     use Notifiable;
     use TwoFactorAuthenticatable;
 
     protected $table = 'users';
-    use HasFactory;
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'level',
+        'birth',
+        'username',
+        'city',
+        'occupation',
+        'bio',
+    ];
+    
  
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
