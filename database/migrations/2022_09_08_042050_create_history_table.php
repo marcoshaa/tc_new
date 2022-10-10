@@ -18,7 +18,7 @@ class CreateHistoryTable extends Migration
             $table->integer('id_user');
             $table->integer('id_questao');
             $table->integer('points');
-            $table->set('nota',['0','1'])->default('0'); 
+            $table->enum('nota',['0','1'])->default('0'); 
             $table->timestamps();
         });
     }

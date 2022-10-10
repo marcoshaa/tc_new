@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('city');
             $table->string('statistic')->nullable();
             $table->string('imageAvatar')->nullable();
-            $table->set('occupation',['student','teacher'])->default('student');
+            $table->enum('occupation',['student','teacher'])->default('student');
             $table->text('bio');
             $table->date('birth');            
             $table->rememberToken();
