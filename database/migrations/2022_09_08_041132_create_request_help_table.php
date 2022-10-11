@@ -15,6 +15,7 @@ class CreateRequestHelpTable extends Migration
     {
         Schema::create('request_help', function (Blueprint $table) {
             $table->id();
+            $table->integer('id_user');
             $table->string('subject');
             $table->text('message');
             $table->timestamps();

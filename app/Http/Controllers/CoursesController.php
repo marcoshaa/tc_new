@@ -18,6 +18,7 @@ Use DB;
 
 class CoursesController extends Controller
 {
+    //seleciona o curso
     public function show(Request $request){
         
         $id = $request->id_courses;
@@ -34,9 +35,4 @@ class CoursesController extends Controller
         return json_encode($cursos);
     }
 
-    //retorna todos os cursos 
-    public function selectCourses(){
-        $cursos = Courses::all();
-        return json_encode($cursos);
-    }
 }

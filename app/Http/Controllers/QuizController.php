@@ -21,9 +21,14 @@ class QuizController extends Controller
 
     public function creatStandard(Request $request){
         $ajuda = new Help;
+        $ajuda->id_user = $request->id_user;
         $ajuda->question = $request->question;
         $ajuda->answer = $request->answer;
         $ajuda->save();
+        $newLog = new Log;
+        $newLog->title = 'Duvidas Frequentes';
+        $newLog->mensage = 'Foi criado um pedido de suporte ('.$ajuda->id.') pelo user id ('.$ajuda->id_user.'), com a seguinte mensagem ('.$ajuda->question.')';
+        $newLog->save();
         return response()->json([
             'question'  => $ajuda->question,
             'answer' => $ajuda->answer,
@@ -33,10 +38,14 @@ class QuizController extends Controller
 
     public function creatRequestHelp(Request $request){
         $ajuda = new RequestHelp;
-        $ajuda->subject = $request->question;
-        $ajuda->message = $request->answer;
+        $ajuda->id_user = $request->id_user;
+        $ajuda->subject = $request->subject;
+        $ajuda->message = $request->message;
         $ajuda->save();
-
+        $newLog = new Log;
+        $newLog->title = 'Pedido de Suporte';
+        $newLog->mensage = 'Foi criado um pedido de suporte ('.$ajuda->id.') pelo user id ('.$ajuda->id_user.'), com a seguinte mensagem ('.$ajuda->message.')';
+        $newLog->save();
         return response()->json([
             'subject'  => $ajuda->subject,
             'message' => $ajuda->message,
