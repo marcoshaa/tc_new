@@ -53,10 +53,13 @@ class QuizController extends Controller
         ],200);      
     }
 
+    //Respostas recebidas.
     public function  responseForm(Request $request){
         $questao = new Answer;
         $questao->id_user = $request->id_user;
         $questao->id_questao = $request->id_questao;
+        //tratativa do acerto, fazer em uma função a parte
+        
         $questao->nota = $request->nota;
         return json_encode('Resposta salva com sucesso'); 
     }
