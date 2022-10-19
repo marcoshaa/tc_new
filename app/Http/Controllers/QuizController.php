@@ -59,8 +59,14 @@ class QuizController extends Controller
         $questao->id_user = $request->id_user;
         $questao->id_questao = $request->id_questao;
         //tratativa do acerto, fazer em uma função a parte
-        
-        $questao->nota = $request->nota;
+        $resposta = $request->choice;
+        $busca = Quiz::where('id','=',$request->id_questao)->first();
+        if($resposta == $busca->answer){
+            $questao->nota = 1;
+        }else{
+            $questao->nota = 0;
+        }
+        $questao->save();
         return json_encode('Resposta salva com sucesso'); 
     }
 

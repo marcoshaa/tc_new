@@ -65,7 +65,9 @@ class UserController extends Controller
         $user = User::where('email','=',$request->email)->update([
             'name'     => $request->name,
             'birth'    => $request->birth,
-            'password' => Hash::make($request->password),
+            'bio'      => $request->bio,
+            'city'     => $request->city,
+            'username' => $request->username,
         ]);
         return response()->json('Perfil Atualizado');
     }

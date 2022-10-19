@@ -19,11 +19,11 @@ class CreateUsersTable extends Migration
             $table->string('username')->unique();            
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('city');
+            $table->string('city')->nullable();
             $table->string('statistic')->nullable();
             $table->string('imageAvatar')->nullable();
             $table->enum('occupation',['student','teacher'])->default('student');
-            $table->text('bio');
+            $table->text('bio')->nullable();
             $table->date('birth');            
             $table->rememberToken();
             $table->timestamps();
