@@ -46,7 +46,7 @@ Route::controller(UserController::class)->group(function(){
 
 Route::controller(UploadController::class)->group(function(){
     
-    Route::post('/upload','store')->name('apload.file');//sobe os aquivos dos  cursos
+    Route::middleware('jwt.verify')->post('/upload','store')->name('apload.file');//sobe os aquivos dos  cursos
     // Route::post('/','')->name('');
     // Route::post('/','')->name('');
 });

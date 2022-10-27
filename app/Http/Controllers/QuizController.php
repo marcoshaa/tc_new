@@ -10,6 +10,7 @@ use App\Models\RequestHelp;
 use App\Models\Answer;
 use App\Models\Quiz;
 use App\Models\Log;
+use App\Models\User;
 Use DB;
 
 class QuizController extends Controller
@@ -21,14 +22,9 @@ class QuizController extends Controller
 
     public function creatStandard(Request $request){
         $ajuda = new Help;
-        $ajuda->id_user = $request->id_user;
         $ajuda->question = $request->question;
         $ajuda->answer = $request->answer;
         $ajuda->save();
-        $newLog = new Log;
-        $newLog->title = 'Duvidas Frequentes';
-        $newLog->mensage = 'Foi criado um pedido de suporte ('.$ajuda->id.') pelo user id ('.$ajuda->id_user.'), com a seguinte mensagem ('.$ajuda->question.')';
-        $newLog->save();
         return response()->json([
             'question'  => $ajuda->question,
             'answer' => $ajuda->answer,
@@ -42,8 +38,10 @@ class QuizController extends Controller
         $ajuda->subject = $request->subject;
         $ajuda->message = $request->message;
         $ajuda->save();
+        $user_l = User::where('id','=',$request->id_user)->first();
         $newLog = new Log;
         $newLog->title = 'Pedido de Suporte';
+        $newLog->user_email = $user_l->email;
         $newLog->mensage = 'Foi criado um pedido de suporte ('.$ajuda->id.') pelo user id ('.$ajuda->id_user.'), com a seguinte mensagem ('.$ajuda->message.')';
         $newLog->save();
         return response()->json([
@@ -72,6 +70,7 @@ class QuizController extends Controller
 
     public function creatQuiz(Request $request){
         $quiz = new Quiz;
+        $quiz->id_courses = $request->id_user;
         $quiz->id_courses = $request->id_courses;
         $quiz->id_teacher = $request->id_teacher;
         $quiz->id_matter = $request->id_matter;
@@ -81,12 +80,14 @@ class QuizController extends Controller
         $quiz->alternative_3 = $request->alternative_3;
         $quiz->alternative_4 = $request->alternative_4;
         $quiz->answer = $request->answer;
+        $user_l = User::where('id','=',$request->id_user)->first();
         if(!empty($quiz)){
             $quiz->save();
             $log = new Log;
             $log->title = 'Criação de questionário';
+            $log->user_email = $user_l->email;
             $log->mensage = 'Foi criado a questão de id ('.$quiz->id.') para o curso de id ('.$quiz->id_courses.') pelo usuário de id ('.$quiz->id_teacher.')';
-
+            $log->save();
             return json_encode('sucess');
         }
         

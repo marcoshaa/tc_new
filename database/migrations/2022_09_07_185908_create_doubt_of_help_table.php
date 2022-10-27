@@ -15,7 +15,6 @@ class CreateDoubtOfHelpTable extends Migration
     {
         Schema::create('doubt_of_help', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_user');
             $table->string('question');            
             $table->text('answer');
             $table->timestamps();
