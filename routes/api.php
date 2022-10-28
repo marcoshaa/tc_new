@@ -31,8 +31,8 @@ Route::get('/', function(){
 Route::controller(AuthController::class)->group(function(){
 
     Route::post('/login', 'login')->name('login.api');
-    Route::middleware('jwt.verify')->post('logout', 'logout')->name('deslogar');
-    Route::middleware('jwt.verify')->post('refresh', 'refresh')->name('att');
+    Route::middleware('jwt.verify')->post('/logout', 'logout')->name('deslogar');
+    Route::middleware('jwt.verify')->post('/refresh', 'refresh')->name('att');
 });
 
 Route::controller(UserController::class)->group(function(){
@@ -62,8 +62,9 @@ Route::controller(QuizController::class)->group(function(){
 
 Route::controller(CoursesController::class)->group(function(){
         
-    Route::post('/view_img','show')->name('show.img');//captura a imagen do curso 
+    Route::post('/viewCourses','show')->name('show.img');//captura a imagen do curso 
     Route::post('/allCourses','allCourses')->name('courses.index');//mostra todos os cursos
+    Route::get('/viewImg','viewImg')->name('courses.index');//mostra todos os cursos
 });
 
 Route::controller(EmblemController::class)->group(function(){

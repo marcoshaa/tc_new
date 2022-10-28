@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
+use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use App\Models\Courses;
 use App\Models\CoursesImg;
@@ -35,4 +36,7 @@ class CoursesController extends Controller
         return json_encode($cursos);
     }
 
+    public function viewImg(Request $request){        
+        return Storage::response($request->route);
+    }
 }
