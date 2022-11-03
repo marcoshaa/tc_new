@@ -78,7 +78,10 @@ class UserController extends Controller
     }
 
     public function selectTeacher(Request $request){
-        $professor = User::where('id','=',$request)->get();
+        $professor = User::where('id','=',$request->id_teacher)->where('occupation','=','teacher')->first();
+        if(empty($professor)){
+            $professor='Professor não localizado';
+        }
         return response()->json($professor);
     }
     

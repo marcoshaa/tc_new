@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Answer extends Model
 {
-    protected $table = "resposta";
+    protected $table = "history";
     protected $fillable = [
         'id_user',
         'id_questao',

@@ -60,9 +60,11 @@ class QuizController extends Controller
         $resposta = $request->choice;
         $busca = Quiz::where('id','=',$request->id_questao)->first();
         if($resposta == $busca->answer){
-            $questao->nota = 1;
+            $questao->nota = '1';
+            $questao->points = 10;
         }else{
-            $questao->nota = 0;
+            $questao->points= 0;
+            $questao->nota = '0';
         }
         $questao->save();
         return json_encode('Resposta salva com sucesso'); 
@@ -70,7 +72,6 @@ class QuizController extends Controller
 
     public function creatQuiz(Request $request){
         $quiz = new Quiz;
-        $quiz->id_courses = $request->id_user;
         $quiz->id_courses = $request->id_courses;
         $quiz->id_teacher = $request->id_teacher;
         $quiz->id_matter = $request->id_matter;
