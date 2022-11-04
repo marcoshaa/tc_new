@@ -7,6 +7,7 @@ use App\Http\Controllers\UploadController;
 use App\Http\Controllers\CoursesController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\QuizController;
+use App\Http\Controllers\EmblemController;
 use App\Services\ResponseService;
 
 /*
