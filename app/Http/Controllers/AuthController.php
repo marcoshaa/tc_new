@@ -31,8 +31,8 @@ class AuthController extends Authenticatable implements JWTSubject
         } catch (JWTException $e) {
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
-
-        return response()->json(compact('token'));
+        $user = User::where('email','=',$request->email)->first();
+        return json_encode([$token,$user]);
     }
 
     /**
