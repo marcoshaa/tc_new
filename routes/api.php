@@ -48,8 +48,7 @@ Route::controller(UserController::class)->group(function(){
 Route::controller(UploadController::class)->group(function(){
     
     Route::middleware('jwt.verify')->post('/upload','store')->name('apload.file');//sobe os aquivos dos  cursos
-    // Route::post('/','')->name('');
-    // Route::post('/','')->name('');
+    Route::middleware('jwt.verify')->post('/cadArticle','cadArticle')->name('cadArticle.file');//sobe os aquivos dos  cursos
 });
 
 Route::controller(QuizController::class)->group(function(){
@@ -59,6 +58,7 @@ Route::controller(QuizController::class)->group(function(){
     Route::middleware('jwt.verify')->post('/request-help','creatRequestHelp')->name('helpRequest.index');//pedido de ajuda
     Route::post('/resposta','responseForm')->name('responseForm');
     Route::middleware('jwt.verify')->post('/creat_quiz','creatQuiz')->name('creat_quiz');//cria as questoes dos cursos
+    Route::middleware('jwt.verify')->post('/history','history')->name('history_quiz');//exibir historico
 });
 
 Route::controller(CoursesController::class)->group(function(){
@@ -66,6 +66,9 @@ Route::controller(CoursesController::class)->group(function(){
     Route::post('/viewCourses','show')->name('show.img');//captura a imagen do curso 
     Route::post('/allCourses','allCourses')->name('courses.index');//mostra todos os cursos
     Route::get('/viewImg','viewImg')->name('courses.index');//mostra todos os cursos
+    Route::post('/authCourse','authCourse')->name('authCourse.index');//mostra todos os cursos
+    Route::post('/offCourses','statusOffCourse')->name('statusOffCourse.index');//mostra todos os cursos
+    Route::post('/cadMatter','cadMatter')->name('cadMatter.index');//cadastra as materias
 });
 
 Route::controller(EmblemController::class)->group(function(){

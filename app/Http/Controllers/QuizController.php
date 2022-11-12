@@ -94,4 +94,9 @@ class QuizController extends Controller
         
         return json_encode('erro');
     }
+
+    public function history(Request $request){
+        $hist = Answer::where('id_user','=',$request->id_user)->get();
+        return json_encode($hist);
+    }
 }
