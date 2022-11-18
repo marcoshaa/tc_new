@@ -18,6 +18,7 @@ class CreateArticleTable extends Migration
             $table->string('title');
             $table->string('subtitle');
             $table->text('bio');
+            $table->enum('status',['0','1'])->default('0');
             $table->string('rota');
             $table->timestamps();
         });

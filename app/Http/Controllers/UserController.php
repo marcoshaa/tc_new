@@ -15,6 +15,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use App\Services\ResponseService;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Answer;
 
 class UserController extends Controller
 {
@@ -69,7 +70,12 @@ class UserController extends Controller
             'city'     => $request->city,
             'username' => $request->username,
         ]);
-        return response()->json('Perfil Atualizado');
+        if($user == 0){
+            $x ="Erro na Atualização";
+        }else{
+            $x ="Sucesso na Atualização";
+        }
+        return json_encode($x);
     }
 
     public function allTeacher(){
@@ -83,6 +89,26 @@ class UserController extends Controller
             $professor='Professor não localizado';
         }
         return response()->json($professor);
+    }
+
+    public function alunos(){
+        $alunos = User::where('occupation','=','student')->get();
+        $x = array();
+        $x[0] = $alunos;
+        $x[1] = 'todos alunos';
+        return json_encode($x);
+    }
+
+    public function alunosHistorico(Request $request){
+        $historico = Answer::where('id_user','=',$request->id)->get();
+        $x = array();
+        $x[0] = $historico;
+        if(!empty($historico)){
+            $x[1]="Historico localizado";
+        }else{
+            $x[1]="Historico do aluno não localizado";
+        }
+        return json_encode($x);
     }
     
 }

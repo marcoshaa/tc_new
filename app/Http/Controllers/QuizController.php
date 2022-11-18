@@ -75,6 +75,7 @@ class QuizController extends Controller
         $quiz->id_courses = $request->id_courses;
         $quiz->id_teacher = $request->id_teacher;
         $quiz->id_matter = $request->id_matter;
+        $quiz->id_user = $request->id_user;
         $quiz->title = $request->title;
         $quiz->alternative_1 = $request->alternative_1;
         $quiz->alternative_2 = $request->alternative_2;

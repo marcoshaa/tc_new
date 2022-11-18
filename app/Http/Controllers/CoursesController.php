@@ -63,6 +63,7 @@ class CoursesController extends Controller
         return json_encode($cursos);
     }
 
+    //cadastra novas materias
     public function cadMatter(Request $request){
         $newCad = new Matter;
         $newCad->name = $request->name;
@@ -72,6 +73,19 @@ class CoursesController extends Controller
         }else{
             $x = 'cadastro não realizado';
         }
+        return json_encode($x);
+    }
+
+    //consulta materia
+    public function buscaMateria(Request $request){
+        $busca = Matter::where('id','=',$request->id)->first();        
+        $x=array();
+        if(!empty($busca)){
+            $x[0]='ok';
+        }else{
+            $x[0]='falha na busca';
+        }
+        $x[1] =  $busca;
         return json_encode($x);
     }
 }

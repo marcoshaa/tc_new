@@ -39,16 +39,19 @@ Route::controller(AuthController::class)->group(function(){
 Route::controller(UserController::class)->group(function(){
 
     Route::post('/creat','index')->name('users.store');//cria user
-    Route::middleware('jwt.verify')->post('/profile-update','updateProfile')->name('updateProfile');//atualiza  perfil
+    Route::middleware('jwt.verify')->post('/profile-update','updateProfile')->name('updateProfile');//atualiza  perfil, menos o email
     Route::post('/allTeacher','allTeacher')->name('allTeacher.index');//busca todos professores
     Route::post('/selectTeacher','selectTeacher')->name('selectTeacher.index');//busca professor pelo id
+    Route::post('/alunosHistorico','alunosHistorico')->name('alunosHistorico.index');//busca professor pelo id
     // Route::post('/login','login')->name('users.login');//login JWT
 });
 
 Route::controller(UploadController::class)->group(function(){
     
     Route::middleware('jwt.verify')->post('/upload','store')->name('apload.file');//sobe os aquivos dos  cursos
-    Route::middleware('jwt.verify')->post('/cadArticle','cadArticle')->name('cadArticle.file');//sobe os aquivos dos  cursos
+    Route::middleware('jwt.verify')->post('/cadArticle','cadArticle')->name('cadArticle.file');//sobe os aquivos dos  artigos
+    Route::get('/viewArticle','viewArticle')->name('viewArticle.file');//view dos artigos
+    Route::middleware('jwt.verify')->post('/attArticle','attArticle')->name('attArticle.file');//sobe os aquivos dos  artigos
 });
 
 Route::controller(QuizController::class)->group(function(){
@@ -69,6 +72,7 @@ Route::controller(CoursesController::class)->group(function(){
     Route::post('/authCourse','authCourse')->name('authCourse.index');//mostra todos os cursos
     Route::post('/offCourses','statusOffCourse')->name('statusOffCourse.index');//mostra todos os cursos
     Route::post('/cadMatter','cadMatter')->name('cadMatter.index');//cadastra as materias
+    Route::post('/buscaMateria','buscaMateria')->name('buscaMateria.index');//passa apenas o id 
 });
 
 Route::controller(EmblemController::class)->group(function(){

@@ -54,13 +54,26 @@ class UploadController extends Controller
         $artigo->bio=$request->bio;
         $artigo->rota= $image->store('public/artigo/');;
         $artigo->save();
-
+        $x = array();
         if(!empty($artigo->id)){
-            $x = 'cadastro realizado com sucesso';
+            $x[0] = 'cadastro realizado com sucesso';
         }else{
-            $x = 'cadastro não realizado';
+            $x[0] = 'cadastro não realizado';
         }
+        $x[1]=$artigo;
+        return json_encode($x);
+    }
+    public function viewArticle(Request $request){
+        $x = Article::where('status','=','0')->get();
+        return json_encode($x);
+    }
 
+    public function attArticle(Request $request){
+        $id = $request->id;
+        $article = Article::where('id','=',$id)->update(['status'=>'1']);
+        $x=array();
+        $x[0]=$article;
+        $x[1]='update realizado com sucesso';
         return json_encode($x);
     }
 }
