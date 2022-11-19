@@ -42,7 +42,7 @@ class CoursesController extends Controller
     }
 
     public function authCourse(Request $request){
-        $user = User::where('id', Auth::id())->first();
+        $user = User::where('id','=', $request->id)->first();
         if($user->occupation != 'adm'){
             $retorno='Usuário sem permissão';
         }else{

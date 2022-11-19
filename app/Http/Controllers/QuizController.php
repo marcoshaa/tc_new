@@ -55,10 +55,10 @@ class QuizController extends Controller
     public function  responseForm(Request $request){
         $questao = new Answer;
         $questao->id_user = $request->id_user;
-        $questao->id_questao = $request->id_questao;
+        $questao->id_questao = $request->id_curso;
         //tratativa do acerto, fazer em uma função a parte
         $resposta = $request->choice;
-        $busca = Quiz::where('id','=',$request->id_questao)->first();
+        $busca = Quiz::where('id','=',$request->id_curso)->first();
         if($resposta == $busca->answer){
             $questao->nota = '1';
             $questao->points = 10;
