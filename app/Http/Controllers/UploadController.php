@@ -8,11 +8,13 @@ use Illuminate\Http\Request;
 use App\Models\Courses;
 use App\Models\CoursesImg;
 use App\Models\Article;
+use App\Models\User;
+use App\Models\Log;
 Use DB;
 
 class UploadController extends Controller
 {
-    public function store(Request $request){
+    public function cadCurso(Request $request){
 
         $val = [
             'images'       =>['required'],
@@ -24,7 +26,7 @@ class UploadController extends Controller
         if($validacao->fails()){
             return response()->json(['erro'=> $validacao->messages()],200);
         }else{
-
+            $user_l = User::where('id','=',$request->teacher_code)->first();
             $images = $request->file('images');
 
             $un = new Courses();
@@ -40,23 +42,36 @@ class UploadController extends Controller
                     $course_img->id_courses = $un->id;
                     $course_img->route = $route;
                     $course_img->save();
-                }
+                }                
             }
+            $log = new Log;
+            $log->title = 'Criação de Cruso';
+            $log->user_email = $user_l->email;
+            $log->mensage = 'Foi criado um Curso de id ('.$un->id.') com o nome de ('.$un->name.') pelo professor de id ('.$request->teacher_code.')';
+            $log->save();
             return json_encode('ok');
         }
     }
     public function cadArticle(Request $request){
+        $user_l = User::where('id','=',$request->id_user)->first();
         $images = $request->file('images');
-
+        $route = $images->store('public/artigo');
         $artigo = new Article;
-        $artigo->title=$request->title;
-        $artigo->subtitle=$request->subtitle;
-        $artigo->bio=$request->bio;
-        $artigo->rota= $image->store('public/artigo/');;
+        $artigo->title      =$request->title;
+        $artigo->subtitle   =$request->subtitle;
+        $artigo->bio        =$request->bio;
+        $artigo->rota       =$route;
         $artigo->save();
         $x = array();
-        if(!empty($artigo->id)){
+        if(!empty($artigo->id)){           
+            $log = new Log;
+            $log->title = 'Criação de Artigo';
+            $log->user_email = $user_l->email;
+            $log->mensage = 'Foi criado um Artigo de id ('.$artigo->id.') com o nome de ('.$artigo->title.') pelo professor de id ('.$user_l->id.')';
+            $log->save();
             $x[0] = 'cadastro realizado com sucesso';
+            $x[1] = $artigo;
+            $x[2] = $log;
         }else{
             $x[0] = 'cadastro não realizado';
         }
@@ -69,11 +84,22 @@ class UploadController extends Controller
     }
 
     public function attArticle(Request $request){
+        $user_l = User::where('id','=',$request->id_user)->first();
         $id = $request->id;
         $article = Article::where('id','=',$id)->update(['status'=>'1']);
+        $articleNew = Article::where('id','=',$id)->first();
         $x=array();
+
+        $log = new Log;
+        $log->title = 'Verificação do Artigo';
+        $log->user_email = $user_l->email;
+        $log->mensage = 'Foi alterado um Artigo de id ('.$articleNew->id.') com o nome de ('.$articleNew->title.') pelo professor de id ('.$user_l->id.')';
+        $log->save();
+
         $x[0]=$article;
         $x[1]='update realizado com sucesso';
+        $x[2] = $log;
+        $x[3] = $articleNew;
         return json_encode($x);
     }
 }

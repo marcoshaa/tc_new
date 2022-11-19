@@ -16,6 +16,7 @@ use Laravel\Fortify\Contracts\CreatesNewUsers;
 use App\Services\ResponseService;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Answer;
+use App\Models\Log;
 
 class UserController extends Controller
 {
@@ -111,5 +112,9 @@ class UserController extends Controller
         }
         return json_encode($x);
     }
-    
+
+    public function logAdm(){
+        $log = Log::all();
+        return json_encode($log);
+    }    
 }

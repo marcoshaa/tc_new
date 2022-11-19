@@ -68,11 +68,13 @@ class CoursesController extends Controller
         $newCad = new Matter;
         $newCad->name = $request->name;
         $newCad->save();
+        $x = array();
         if(!empty($newCad->id)){
-            $x = 'cadastro realizado com sucesso';
+            $x[0] = 'cadastro realizado com sucesso';
         }else{
-            $x = 'cadastro não realizado';
+            $x[0] = 'cadastro não realizado';
         }
+        $x[1] = $newCad;
         return json_encode($x);
     }
 

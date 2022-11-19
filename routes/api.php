@@ -43,12 +43,13 @@ Route::controller(UserController::class)->group(function(){
     Route::post('/allTeacher','allTeacher')->name('allTeacher.index');//busca todos professores
     Route::post('/selectTeacher','selectTeacher')->name('selectTeacher.index');//busca professor pelo id
     Route::post('/alunosHistorico','alunosHistorico')->name('alunosHistorico.index');//busca professor pelo id
+    Route::post('/log','logAdm')->name('logAdm.index');//busca professor pelo id
     // Route::post('/login','login')->name('users.login');//login JWT
 });
 
 Route::controller(UploadController::class)->group(function(){
     
-    Route::middleware('jwt.verify')->post('/upload','store')->name('apload.file');//sobe os aquivos dos  cursos
+    Route::middleware('jwt.verify')->post('/upload','cadCurso')->name('apload.file');//sobe os aquivos dos  cursos
     Route::middleware('jwt.verify')->post('/cadArticle','cadArticle')->name('cadArticle.file');//sobe os aquivos dos  artigos
     Route::get('/viewArticle','viewArticle')->name('viewArticle.file');//view dos artigos
     Route::middleware('jwt.verify')->post('/attArticle','attArticle')->name('attArticle.file');//sobe os aquivos dos  artigos
@@ -78,8 +79,8 @@ Route::controller(CoursesController::class)->group(function(){
 Route::controller(EmblemController::class)->group(function(){
         
     Route::post('/view_emblem','show')->name('show.emblem');//captura todos os emblemas
-    Route::post('/selectEmblem','selectEmblem')->name('selectEmblem.index');//escolhe um emblema
-    
+    Route::post('/selectEmblem','selectEmblem')->name('selectEmblem.index');//escolhe um emblema    
+    Route::post('/creatEmblema','creatEmblema')->name('creatEmblema.index');//cria um emblema
 });
 
 // Route::post('/auth/1', [UserController::class, 'index'])->name('index');
