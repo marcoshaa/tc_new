@@ -42,7 +42,8 @@ class UserController extends Controller
                 'bio'       => $request->bio,
                 'password'  => Hash::make($request->password),
                 'occupation'=> $request->occupation,
-                'birth'     => $request->birth
+                'birth'     => $request->birth,
+                'cor'       => $request->cor
             ]);
             if(!empty($user)){
                 return response()->json([
