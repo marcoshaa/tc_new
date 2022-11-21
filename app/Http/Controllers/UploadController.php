@@ -9,6 +9,7 @@ use App\Models\Courses;
 use App\Models\CoursesImg;
 use App\Models\Article;
 use App\Models\User;
+use App\Models\Matter;
 use App\Models\Log;
 Use DB;
 
@@ -60,6 +61,7 @@ class UploadController extends Controller
         $artigo->title      =$request->title;
         $artigo->subtitle   =$request->subtitle;
         $artigo->bio        =$request->bio;
+        $artigo->id_matter  =$request->id_matter;
         $artigo->rota       =$route;
         $artigo->save();
         $x = array();
@@ -78,9 +80,62 @@ class UploadController extends Controller
         $x[1]=$artigo;
         return json_encode($x);
     }
-    public function viewArticle(Request $request){
-        $x = Article::where('status','=','0')->get();
+    function nameMatter($id){
+        $return = Matter::where('id','=',$id)->first();
+        return $return->name;
+    }
+
+    public function allArtigos(){
+        $artigos = Article::all();
+        $x = array();
+        foreach($artigos as $artigo){
+            $x[] = array(
+                'id'        =>$artigo->id,
+                'title'     =>$artigo->title,
+                'subtitle'  =>$artigo->subtitle,
+                'bio'       =>$artigo->bio,
+                'id_matter' =>$this->nameMatter($artigo->id_matter),
+                'matter'    =>$this->nameMatter($artigo->id_matter),
+                'status'    =>$artigo->status,
+                'rota'      =>$artigo->rota,
+            );
+        }
+        $ativo = Article::where('status','=','1')->count();
+        $inativo = Article::where('status','=','0')->count();
+        $x[] = array(
+            'inativos' =>$inativo,
+            'ativo'    =>$ativo,
+        );
         return json_encode($x);
+    }
+
+    public function allMatter(){
+        $materias = Matter::all();
+        $x = array();
+        foreach($materias as $materia){
+            $x[] = array(
+                'id'   => $materia->id,
+                'name' => $materia->name,
+            );
+        }
+        return json_encode($x);
+    } 
+
+    public function viewArticle(Request $request){
+        $xs = Article::where('status','=','0')->get();
+        $y=array();
+        foreach($xs as $x){
+            $y[] = array(
+                'id'        =>$x->id,
+                'title'     =>$x->title,
+                'subtitle'  =>$x->subtitle,
+                'bio'       =>$x->bio,
+                'matter'    =>$this->nameMatter($x->id_matter),
+                'status'    =>$x->status,
+                'rota'      =>$x->rota,
+            );
+        }
+        return json_encode($y);
     }
 
     public function attArticle(Request $request){

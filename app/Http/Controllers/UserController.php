@@ -117,4 +117,27 @@ class UserController extends Controller
         $log = Log::all();
         return json_encode($log);
     }    
+
+    public function allUser(){
+        $user = User::all();
+        $y=array();
+        foreach($user as $use){
+            $y[] = array(
+                'id' =>$use->id,
+                'name' =>$use->name,
+                'email' =>$use->email,
+                'cor' =>$use->cor,
+                'occupation' =>$use->occupation,
+            );
+        }
+        $user1 = User::where('occupation','=','student')->count();
+        $user2 = User::where('occupation','=','teacher')->count();
+        $user3 = User::where('occupation','=','adm')->count();
+        $y[] = array(
+            'Alunos' => $user1,
+            'Professor' => $user2,
+            'ADM' => $user3,
+        );
+        return json_encode($y);
+    }
 }

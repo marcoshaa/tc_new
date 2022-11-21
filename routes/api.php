@@ -44,15 +44,18 @@ Route::controller(UserController::class)->group(function(){
     Route::post('/selectTeacher','selectTeacher')->name('selectTeacher.index');//busca professor pelo id
     Route::post('/alunosHistorico','alunosHistorico')->name('alunosHistorico.index');//busca professor pelo id
     Route::post('/log','logAdm')->name('logAdm.index');//busca professor pelo id
+    Route::post('/allUser','allUser');
     // Route::post('/login','login')->name('users.login');//login JWT
 });
 
 Route::controller(UploadController::class)->group(function(){
     
     Route::middleware('jwt.verify')->post('/upload','cadCurso')->name('apload.file');//sobe os aquivos dos  cursos
-    Route::middleware('jwt.verify')->post('/cadArticle','cadArticle')->name('cadArticle.file');//sobe os aquivos dos  artigos
-    Route::get('/viewArticle','viewArticle')->name('viewArticle.file');//view dos artigos
+    Route::post('/cadArticle','cadArticle')->name('cadArticle.file');//sobe os aquivos dos  artigos
+    Route::post('/viewArticle','viewArticle')->name('viewArticle.file');//view dos artigos
     Route::middleware('jwt.verify')->post('/attArticle','attArticle')->name('attArticle.file');//sobe os aquivos dos  artigos
+    Route::post('/allArtigos','allArtigos');
+    Route::post('/allMatter','allMatter');
 });
 
 Route::controller(QuizController::class)->group(function(){
@@ -74,6 +77,7 @@ Route::controller(CoursesController::class)->group(function(){
     Route::post('/offCourses','statusOffCourse')->name('statusOffCourse.index');//mostra todos os cursos
     Route::post('/cadMatter','cadMatter')->name('cadMatter.index');//cadastra as materias
     Route::post('/buscaMateria','buscaMateria')->name('buscaMateria.index');//passa apenas o id 
+    Route::post('/tdsCursos','tdsCursos');
 });
 
 Route::controller(EmblemController::class)->group(function(){

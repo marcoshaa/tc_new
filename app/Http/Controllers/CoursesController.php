@@ -31,10 +31,54 @@ class CoursesController extends Controller
         return json_encode($j);
     }
 
+    function nameMatter($id){
+        $return = Matter::where('id','=',$id)->first();
+        return $return->name;
+    }
+
+    function nameTeacher($id){
+        $return = User::where('id','=',$id)->first();
+        return $return->name;
+    }
+
     //retorna todos os cursos 
     public function allCourses(){
         $cursos = Courses::where('status','=','1')->get();
-        return json_encode($cursos);
+        $y = array();
+        foreach($cursos as $curso){
+            $y[] = array(
+                'id'          =>$curso->id,
+                'name'        =>$curso->name,
+                'teacher_name'=>$this->nameTeacher($curso->teacher_code),
+                'teacher_code'=>$curso->teacher_code,
+                'matter'      =>$this->nameMatter($curso->id_matter),
+                'status'      =>$curso->status,
+            );
+        }
+        return json_encode($y);
+    }
+
+    //retorna todos os cursos/ visao gerencial
+    public function tdsCursos(){
+        $cursos = Courses::all();
+        $y = array();
+        foreach($cursos as $curso){
+            $y[] = array(
+                'id'          =>$curso->id,
+                'name'        =>$curso->name,
+                'teacher_name'=>$this->nameTeacher($curso->teacher_code),
+                'teacher_code'=>$curso->teacher_code,
+                'matter'      =>$this->nameMatter($curso->id_matter),
+                'status'      =>$curso->status,
+            );
+        }
+        $cursosAtivos = Courses::where('status','=','1')->count();
+        $cursosInativos = Courses::where('status','=','0')->count();
+        $y[] = array(
+            'ativos'   =>$cursosAtivos,
+            'Inativos' =>$cursosInativos,
+        );
+        return json_encode($y);
     }
 
     public function viewImg(Request $request){        
